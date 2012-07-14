@@ -7,7 +7,7 @@ function draw(data){
         width = 800,
         margin = {x: 40, y:30};
 
-    var svg = d3.select('section#histogram')
+    var svg = d3.select('section#kde')
         .append('svg')
         .attr("width", 800)
         .attr("height", 600);
@@ -64,26 +64,30 @@ function draw(data){
         g.append("svg:path").attr("d", line(data)).attr('class','line');
     }
     
-    function draw_kde(g, data, dist){
+    function draw_kde(g, dist, data){
         
-        var xrange = d3.range(time_extent[0], time_extent[1], 60000)
-        console.log(xrange)
+		// xrange is the time values we want to draw
+        var xrange = d3.range(time_extent[0], time_extent[1], 1000)
+		// ydata is the smoothed rate estiamte
         var ydata = xrange.map(
-            function(xi){
-                d = new dist(xi,120000)
-                return d3.sum(data.map(d.density))
+            function(xi){			
+                return d3.sum(data.map(function(di){
+					return dist.density(Math.abs(xi-di))
+				}))
             }
         )
-        
+		        
         var y = d3.scale.linear()
-            .domain([0, d3.max(data)])
+            .domain([0, d3.max(ydata)])
             .range([panel_height, 0]);
         
+		data = _.zip(xrange,ydata).map(function(d){return {x:d[0], y:d[1]}})
+				
         var line = d3.svg.line()
-            .x(function(d,i) { return x(d.x+(d.dx/2)); })
+            .x(function(d,i) { return x(d.x); })
             .y(function(d) { return y(d.y); })
-        
-        
+				
+		g.append("svg:path").attr("d", line(data)).attr('class','line');
     }
         
     var original_histogram = d3.layout.histogram()
@@ -98,25 +102,12 @@ function draw(data){
         .bins(d3.range(start,stop,step));
     
     draw_histogram(g3, original_histogram, data)
-        
-    d3.select('section#histogram').on('click',function(d){
-        
-        N = N + 5;
-        step = d3.round((stop-start)/N)
-        
-        var binned_histogram = d3.layout.histogram()
-            .bins(d3.range(start,stop,step));
-        
-        g1.selectAll('.line').remove()
-        g2.selectAll('.bar').remove()
-        
-        draw_histogram(g2, binned_histogram, data)
-        draw_line(g1, binned_histogram, data)
-            
-    })
+	
+	draw_line(g1, binned_histogram, data)
     
-    //draw_histogram(g2, binned_histogram, data)
-    //draw_line(g1, binned_histogram, data)
+	normal = new NormalDistribution(0,60*1000)
+	gamma = new GammaDistribution()
+	draw_kde(g2, normal, data)
 
     var time_axis = d3.svg.axis()
         .scale(time_scale)
@@ -126,12 +117,10 @@ function draw(data){
         .attr("class", "x axis") 
         .attr("transform", "translate(0," + panel_height + ")") 
         .call(time_axis);
-
     g2.append("g")
         .attr("class", "x axis") 
         .attr("transform", "translate(0," + panel_height + ")") 
         .call(time_axis);
-
     g3.append("g")
         .attr("class", "x axis") 
         .attr("transform", "translate(0," + panel_height + ")") 
