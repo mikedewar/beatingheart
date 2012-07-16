@@ -20,7 +20,7 @@
 <title>The Beating Heart of Kim Kardashian</title>
 
 <section>
-	<h1>The Beating Heart <br/> <i>of</i> <br/> Kim Kardashian</h1>
+	<h2>The Beating Heart <br/> <i>of</i> <br/> Kim Kardashian</h2>
 </section>
 
 <section>
@@ -93,20 +93,58 @@
 
 
 <section>
-	<h1>Heterogenous Point Process</h1>
+	<h1>Heterogenous Point Processes</h1>
 </section>
 
 <section>
-	<h1>click</h1>
+<pre style="font-size:0.5em; margin-top:1em">
+        "a": "Mozilla/5.0 (iPad; CPU OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206 Twitter for iPad",
+        "c": "US",
+        "nk": 1,
+        "tz": "America/Los_Angeles",
+        "gr": "WA",
+        "g": "NDeWi3",
+        "i": "96fa514376a93c1641bcea90dbc4b07a",
+        "h": "NDeWi1",
+        "k": "4f488a1c-0025f-049f2-301cf10a",
+        "l": "plakshmi",
+        "al": "en-us",
+        "topic": "food",
+        "p": "new",
+        "hh": "bit.ly",
+        "r": "direct",
+        "u": "http://www.padmalakshmi.com/po...",
+        "t": 1341021591,
+        "hc": 1340637617,
+        "cy": "Seattle",
+        "ovi": {
+            "count": 599,
+            "proba": [
+                0.86667,
+                0.13333
+            ]
+        },
+        "ll": [
+            47.5951,
+            -122.3326
+        ]
+</pre>
+</section>
+
+
+<section>
+        <pre style="text-align:center; margin-top:3em">curl -s developer.usa.gov/1usagov</pre>
 </section>
 
 <section>
-	<h1>many clicks</h1>
+    <ul style="font-size:2em; margin-top:100px">
+        <li>clicks: up to 3KHz</li>
+        <li>new docs: up to 75Hz</li>
+    </ul>
 </section>
 
 <section id="histogram">
 </section>
-
 
 <section style="font-size:3.5em; text-align:center">
 <div style="margin-top:1em;">
@@ -120,15 +158,23 @@ $ = \sum_i \phi(t-t_i)$
 </div>
 </section>
 
+<section style="background-color:white;">
+    <figure>
+        <img src="gaussian.png">
+    </figure>
+</section>
+
+
 <section id="kde">
 </section>
 
-<section>
-	<h2>gamma</h2>
+<section style="background-color:white;">
+    <figure>
+        <img src="gamma.png">
+    </figure>
 </section>
 
 <section id="online">
-	<h2>online process</h2>
 </section>
 
 <section>
@@ -136,28 +182,54 @@ $ = \sum_i \phi(t-t_i)$
 </section>
 
 <section>
-	<h2>kim history</h2>
+    <h2>infrastructure</h2>
 </section>
 
 <section>
-	<h2>cookie monster</h2>
+    <ul>
+        <li>300K active phrases</li>
+        <li>45minutes of clicks</li>
+        <li>rate calculation performed at query time</li>
+    </ul>
 </section>
 
 <section>
-	<h2>obama</h2>
+	<figure>
+		<img src="cookie_monster_attn.png">
+		<figcaption style="color:black; margin-top:1em;">http://bit.ly/Mhqsfs</figcaption>
+	</figure>
 </section>
 
 <section>
-	<h2>realtime</h2>
+	<figure>
+		<img src="kim_attention.png">
+		<figcaption style="color:black; margin-top:1em;">http://bit.ly/M2Eipc</figcaption>
+	</figure>
 </section>
 
 <section>
-    <h2>Thanks</h2>
+	<figure>
+		<img src="obama_attn.png">
+	</figure>
 </section>
+
+<section>
+    <figure>
+		<img src="realtime.png">
+	</figure>
+</section>
+
+<section>
+    <figure>
+		<img src="att.png">
+	</figure>
+</section>
+
 
 <!-- SCRIPTS -->
 <script src="histogram.js"></script>
 <script src="kde.js"></script>
+<script src="online_rate.js"></script>
 
 
 
@@ -209,11 +281,18 @@ path {
     margin: 1em 0 1em 0;
   }
 
-  h1, h2 {
+  h1 {
     margin-top: 200px;
     text-align: center;
     font-size: 80px;
   }
+  
+  h2 {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 80px;
+  }
+  
   h3 {
     margin: 100px 0 50px 100px;
   }

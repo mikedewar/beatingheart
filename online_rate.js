@@ -7,7 +7,7 @@ function draw(data){
         width = 800,
         margin = {x: 40, y:30};
 
-    var svg = d3.select('section#kde')
+    var svg = d3.select('section#online')
         .append('svg')
         .attr("width", 800)
         .attr("height", 600);
@@ -63,15 +63,18 @@ function draw(data){
         g.append("svg:path").attr("d", line(data)).attr('class','line');
     }
     
-    function draw_kde(g, dist, data){
+    function draw_kde(g, dist, data, colour){
         
+        if (typeof colour === "undefined"){
+            colour = "black"
+        }
 		// xrange is the time values we want to draw
         var xrange = d3.range(time_extent[0], time_extent[1], 1000)
 		// ydata is the smoothed rate estiamte
         var ydata = xrange.map(
             function(xi){			
                 return d3.sum(data.map(function(di){
-					return dist.density(Math.abs(xi-di))
+					return dist.density(xi-di)
 				}))
             }
         )
@@ -86,7 +89,7 @@ function draw(data){
             .x(function(d,i) { return x(d.x); })
             .y(function(d) { return y(d.y); })
 				
-		g.append("svg:path").attr("d", line(data)).attr('class','line');
+		g.append("svg:path").attr("d", line(data)).attr('class','line').style('stroke',colour);
     }
         
     var original_histogram = d3.layout.histogram()
@@ -102,9 +105,14 @@ function draw(data){
     
     draw_histogram(g2, original_histogram, data)
 	    
-	normal = new NormalDistribution(0,40*1000)
+	gamma = new GammaDistribution(3,40000)
+    normal = new NormalDistribution(0,50*1000)
 
-	draw_kde(g1, normal, data)
+	draw_kde(g1, gamma, data)
+    
+    svg.on('click', function(d){
+        draw_kde(g1, normal, data, 'blue')
+    });
 
     var time_axis = d3.svg.axis()
         .scale(time_scale)
